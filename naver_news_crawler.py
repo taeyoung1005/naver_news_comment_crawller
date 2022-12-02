@@ -7,6 +7,7 @@ import chromedriver_autoinstaller
 from multiprocessing import Process, Manager, cpu_count, freeze_support
 from datetime import datetime, timedelta
 import numpy as np
+from openpyxl import Workbook
 import csv
 
 chrome_ver = chromedriver_autoinstaller.get_chrome_version().split('.')[0]
@@ -19,7 +20,7 @@ if os.path.exists(driver_path) != True:
 def crawl_links(search, start_date, end_date, url_list):
 
     chrome_options = webdriver.ChromeOptions()
-    # chrome_options.add_argument('--headless')
+    chrome_options.add_argument('--headless')
     chrome_options.add_argument('--no-sandbox')
     chrome_options.add_argument('--privileged')
     chrome_options.add_argument('--incognito')
@@ -61,7 +62,7 @@ def crawl_links(search, start_date, end_date, url_list):
 def crawl_comment(url_list, comment_list):
 
     chrome_options = webdriver.ChromeOptions()
-    # chrome_options.add_argument('--headless')
+    chrome_options.add_argument('--headless')
     chrome_options.add_argument('--no-sandbox')
     chrome_options.add_argument('--privileged')
     chrome_options.add_argument('--incognito')
@@ -127,9 +128,9 @@ if __name__ == '__main__':
     url_list = manager.list()
     comment_list = manager.list()
 
-    search = "윤석열"
-    start_date = "20221130"
-    end_date= "20221201"
+    search = "월드컵"
+    start_date = "20221120"
+    end_date= "20221203"
 
     sd = start_date
     ed = end_date
@@ -197,3 +198,10 @@ if __name__ == '__main__':
     with open(f'./{search}_{sd}_{ed}/{search}_{sd}_{ed}_comment.csv', 'w', encoding='utf-8', newline='') as f:
         writer = csv.writer(f)
         writer.writerows(comment_list)
+
+    wb = Workbook()
+    ws = wb.active
+    with open(f'./{search}_{sd}_{ed}/{search}_{sd}_{ed}_comment.csv', 'r', encoding='utf8') as f:
+        for row in csv.reader(f):
+            ws.append(row)
+    wb.save(f'./{search}_{sd}_{ed}/{search}_{sd}_{ed}_comment.xlsx')
