@@ -15,9 +15,8 @@ if os.path.exists(driver_path) != True:
     chromedriver_autoinstaller.install(True)
     print("크롬드라이버 설치완료")
 
-url_list = []
-def crawl_links(search, start_date, end_date):
-    global url_list
+def crawl_links(search, start_date, end_date, url_list):
+
     chrome_options = webdriver.ChromeOptions()
     # chrome_options.add_argument('--headless')
     chrome_options.add_argument('--no-sandbox')
@@ -37,30 +36,35 @@ def crawl_links(search, start_date, end_date):
     driver.get(url)
 
     def gather_url():
-        info_list = driver.find_elements(By.CLASS_NAME, 'info')
-        for info in info_list:
-            if info.get_attribute('href') != None:
-                url = info.get_attribute('href')
-                if "news.naver.com" in url and "sports" not in url and "entertain" not in url:
-                    url_list.append(url)
-                    print(f'{url}')
-
+        try:
+            info_list = driver.find_elements(By.CLASS_NAME, 'info')
+            for info in info_list:
+                if info.get_attribute('href') != None:
+                    url = info.get_attribute('href')
+                    if "news.naver.com" in url and "sports" not in url and "entertain" not in url:
+                        url_list.append(url)
+                        print(f'{url}')
+        except:
+            pass
     while True:
-        if driver.find_element(By.CLASS_NAME, 'btn_next').is_displayed() == True and driver.find_element(By.CLASS_NAME, 'btn_next').get_attribute('aria-disabled') == 'false':
-            driver.find_element(By.CLASS_NAME, 'btn_next').click()
-        else:
-            break
         gather_url()
+        try:
+            if driver.find_element(By.CLASS_NAME, 'btn_next').is_displayed() == True and driver.find_element(By.CLASS_NAME, 'btn_next').get_attribute('aria-disabled') == 'false':
+                driver.find_element(By.CLASS_NAME, 'btn_next').click()
+            else:
+                break
+        except:
+            break
     driver.quit()
 
 if __name__ == '__main__':
     freeze_support()
 
-    num_of_cpu = cpu_count()-2
+    num_of_cpu = int(cpu_count()*0.8)
     manager = Manager()
     url_list = manager.list()
 
-    search = "월드컵"
+    search = "윤석열"
     start_date = "20221120"
     end_date= "20221201"
 
@@ -81,6 +85,7 @@ if __name__ == '__main__':
                 search,
                 date_list[i][0],
                 date_list[i][-1],
+                url_list
             )
         )
         
@@ -91,8 +96,10 @@ if __name__ == '__main__':
     for process in processes:
         process.join()
 
-
     url_list = list(set(url_list))
+    if not os.path.exists(f'./{search}_{sd}_{ed}'):
+        os.makedirs(f'./{search}_{sd}_{ed}')
     with open(f'./{search}_{sd}_{ed}/{search}_{sd}_{ed}_url.txt', 'w', encoding='utf-8') as f:
         for i in url_list:
+            print(i)
             f.write(i+'\n')
