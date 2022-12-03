@@ -1,7 +1,9 @@
 # naver_news_comment_crawller
 
 ### 설치 라이브러리
-pip3 selenium chromedriver_autoinstaller numpy openpyxl
+- pip3 selenium chromedriver_autoinstaller numpy openpyxl
+
+<br>
 
 naver_news_crawler.py 뉴스기사링크 크롤러
 
