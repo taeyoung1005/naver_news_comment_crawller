@@ -1,5 +1,8 @@
 # naver_news_comment_crawller
 
+### 설치 라이브러리
+pip3 selenium chromedriver_autoinstaller numpy openpyxl
+
 naver_news_crawler.py 뉴스기사링크 크롤러
 
 naver_news_comment_crawler.py 뉴스기사댓글 크롤러
