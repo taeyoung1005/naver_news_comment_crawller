@@ -128,9 +128,12 @@ if __name__ == '__main__':
     url_list = manager.list()
     comment_list = manager.list()
 
-    search = "월드컵"
-    start_date = "20221120"
-    end_date= "20221203"
+    # search = "월드컵"
+    # start_date = "20221120"
+    # end_date= "20221203"
+    search = input("검색어 입력: ")
+    start_date = input("시작 날짜 입력: ")
+    end_date= input("종료 날짜 입력: ")
 
     sd = start_date
     ed = end_date

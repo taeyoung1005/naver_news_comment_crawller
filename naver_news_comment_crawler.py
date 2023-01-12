@@ -19,7 +19,7 @@ if os.path.exists(driver_path) != True:
 def crawl_comment(url_list, comment_list):
 
     chrome_options = webdriver.ChromeOptions()
-    # chrome_options.add_argument('--headless')
+    chrome_options.add_argument('--headless')
     chrome_options.add_argument('--no-sandbox')
     chrome_options.add_argument('--privileged')
     chrome_options.add_argument('--incognito')
@@ -80,13 +80,17 @@ def crawl_comment(url_list, comment_list):
 if __name__ == '__main__':
     freeze_support()
 
-    num_of_cpu = int(cpu_count()*0.8)
+    num_of_cpu = int(cpu_count())
+    print(num_of_cpu)
     manager = Manager()
     comment_list = manager.list()
 
-    search = "윤석열"
-    start_date = "20221120"
-    end_date= "20221201"
+    # search = "월드컵"
+    # start_date = "20221120"
+    # end_date= "20221203"
+    search = input("검색어 입력: ")
+    start_date = input("시작 날짜 입력: ")
+    end_date= input("종료 날짜 입력: ")
 
     sd = start_date
     ed = end_date

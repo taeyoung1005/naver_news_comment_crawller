@@ -8,7 +8,7 @@
 ## 사용법
 
 ### 설치 라이브러리
-- pip3 selenium chromedriver_autoinstaller numpy openpyxl
+- pip3 install selenium chromedriver_autoinstaller numpy openpyxl
 
 <br>
 
