@@ -1,4 +1,11 @@
-# naver_news_comment_crawller
+# 같은 형식의 다음 크롤러 개발 예정
+
+# bing뉴스 제목 및 기사 크롤러 개발 예정
+
+# GUI로 만들 예정
+
+
+## 사용법
 
 ### 설치 라이브러리
 - pip3 selenium chromedriver_autoinstaller numpy openpyxl
